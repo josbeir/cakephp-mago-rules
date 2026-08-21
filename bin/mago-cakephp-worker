@@ -9,7 +9,7 @@ use MagoCakePHP\CakePhpExtension;
 $autoload = dirname(__DIR__, 3) . '/autoload.php';
 if (!is_file($autoload)) {
     // Support running directly from a source checkout as well as Composer's
-    // installed vendor/josbeir/cakephp-mago-rules layout.
+    // installed vendor/cakephp/mago-rules layout.
     $autoload = dirname(__DIR__) . '/vendor/autoload.php';
 }
 

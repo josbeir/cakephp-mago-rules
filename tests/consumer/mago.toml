@@ -1,6 +1,6 @@
 version = "1.47"
 php-version = "8.4"
-extends = "vendor/josbeir/cakephp-mago-rules/cakephp.mago.toml"
+extends = "vendor/cakephp/mago-rules/cakephp.mago.toml"
 
 [source]
 paths = ["src", "tests"]

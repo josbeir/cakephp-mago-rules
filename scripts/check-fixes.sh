@@ -9,10 +9,10 @@ cleanup() {
 }
 trap cleanup EXIT
 
-mkdir -p "$fixture_dir/src" "$fixture_dir/tests" "$fixture_dir/vendor/josbeir"
+mkdir -p "$fixture_dir/src" "$fixture_dir/tests" "$fixture_dir/vendor/cakephp"
 cp "$repo_root/tests/fixer/input.php" "$fixture_dir/src/Rules.php"
 cp "$repo_root/tests/consumer/mago.toml" "$fixture_dir/mago.toml"
-ln -s "$repo_root" "$fixture_dir/vendor/josbeir/cakephp-mago-rules"
+ln -s "$repo_root" "$fixture_dir/vendor/cakephp/mago-rules"
 
 "$repo_root/vendor/bin/mago" --workspace "$fixture_dir" lint --fix --format-after-fix --fail-on-remaining --only \
     mago-cakephp/elseif,mago-cakephp/docblock-tag-spacing,mago-cakephp/inherit-doc

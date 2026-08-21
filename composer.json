@@ -1,5 +1,5 @@
 {
-  "name": "josbeir/cakephp-mago-rules",
+  "name": "cakephp/mago-rules",
   "description": "CakePHP-specific linting rules and formatter defaults for Mago.",
   "type": "library",
   "license": "MIT",

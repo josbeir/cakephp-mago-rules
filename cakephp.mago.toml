@@ -1,8 +1,8 @@
 # Import this file from a project's mago.toml with:
-# extends = "vendor/josbeir/cakephp-mago-rules/cakephp.mago.toml"
+# extends = "vendor/cakephp/mago-rules/cakephp.mago.toml"
 
 [extension-hosts.cakephp]
-command = ["php", "vendor/josbeir/cakephp-mago-rules/bin/mago-cakephp-worker"]
+command = ["php", "vendor/cakephp/mago-rules/bin/mago-cakephp-worker"]
 
 # Mago owns generic formatting. These settings pin the CakePHP-specific
 # choices that differ from, or are important additions to, PSR-12.

@@ -1,8 +1,8 @@
 # CakePHP rules for Mago
 
-[![Quality gates](https://github.com/josbeir/cakephp-mago-rules/actions/workflows/quality.yml/badge.svg)](https://github.com/josbeir/cakephp-mago-rules/actions/workflows/quality.yml)
-[![License](https://img.shields.io/github/license/josbeir/cakephp-mago-rules)](LICENSE)
-[![Packagist downloads](https://img.shields.io/packagist/dt/josbeir/cakephp-mago-rules?logo=packagist&label=downloads)](https://packagist.org/packages/josbeir/cakephp-mago-rules)
+[![Quality gates](https://github.com/cakephp/mago-rules/actions/workflows/quality.yml/badge.svg)](https://github.com/cakephp/mago-rules/actions/workflows/quality.yml)
+[![License](https://img.shields.io/github/license/cakephp/mago-rules)](LICENSE)
+[![Packagist downloads](https://img.shields.io/packagist/dt/cakephp/mago-rules?logo=packagist&label=downloads)](https://packagist.org/packages/cakephp/mago-rules)
 [![Mago compatibility](https://img.shields.io/badge/Mago-%5E1.47-f97316)](https://mago.carthage.software/)
 
 A Mago-first coding-standard preset for CakePHP applications and plugins. Mago
@@ -13,13 +13,13 @@ cannot express natively.
 ## Installation
 
 ```sh
-composer require --dev josbeir/cakephp-mago-rules carthage-software/mago
+composer require --dev cakephp/mago-rules carthage-software/mago
 ```
 
 Import the preset from the project's `mago.toml`:
 
 ```toml
-extends = "vendor/josbeir/cakephp-mago-rules/cakephp.mago.toml"
+extends = "vendor/cakephp/mago-rules/cakephp.mago.toml"
 ```
 
 The imported configuration starts the package-owned extension worker. No
