@@ -66,7 +66,7 @@ final class Sample
     /**
      * @throws \RuntimeException When the operation fails.
      */
-    protected function _allowedProtectedMethod(): void
+    protected function _getAllowedProtectedMethod(): void
     {
     }
 

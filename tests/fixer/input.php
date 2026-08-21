@@ -11,6 +11,20 @@ final class Rules
     {
         return $this;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function inherited(): void
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function completelyInherited(): void
+    {
+    }
 }
 
 if ($first) {

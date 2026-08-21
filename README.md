@@ -19,7 +19,7 @@ composer require --dev josbeir/cakephp-mago-rules carthage-software/mago
 Import the preset from the project's `mago.toml`:
 
 ```toml
-extends = "vendor/josbeir/cakephp-mago-rules/mago.cakephp.toml"
+extends = "vendor/josbeir/cakephp-mago-rules/cakephp.mago.toml"
 ```
 
 The imported configuration starts the package-owned extension worker. No
@@ -57,7 +57,7 @@ cyclomatic-complexity = { enabled = false }
 | PSR-12 layout, braces, imports, quotes, commas, casts and return spacing | Mago formatter with CakePHP settings |
 | Short arrays, braced blocks, short tags, silenced errors, assignments in conditions and redundant syntax | Native Mago rules |
 | Trait `Trait` suffix | `mago-cakephp/trait-suffix` |
-| Public method underscore prefix | `mago-cakephp/public-method-underscore` |
+| Method underscore prefixes, with Entity accessor/mutator exceptions | `mago-cakephp/public-method-underscore` |
 | `elseif` spelling | `mago-cakephp/elseif` |
 | Function and method docblocks outside tests | `mago-cakephp/function-docblock` |
 | One space after PHPDoc tags | `mago-cakephp/docblock-tag-spacing` |

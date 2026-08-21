@@ -1,5 +1,5 @@
 # Import this file from a project's mago.toml with:
-# extends = "vendor/josbeir/cakephp-mago-rules/mago.cakephp.toml"
+# extends = "vendor/josbeir/cakephp-mago-rules/cakephp.mago.toml"
 
 [extension-hosts.cakephp]
 command = ["php", "vendor/josbeir/cakephp-mago-rules/bin/mago-cakephp-worker"]

@@ -20,8 +20,8 @@ final class PublicUnderscoreMethodRule implements Rule
     {
         return new RuleDefinition(
             code: 'mago-cakephp/public-method-underscore',
-            name: 'CakePHP public method naming',
-            description: 'Disallows an underscore prefix on public non-magic methods.',
+            name: 'CakePHP method naming',
+            description: 'Disallows underscore-prefixed methods except CakePHP entity accessors and mutators.',
             defaultLevel: Level::Error,
             defaultEnabled: true,
             targets: [NodeKind::Method],
@@ -33,20 +33,19 @@ final class PublicUnderscoreMethodRule implements Rule
      */
     public function lint(LintContext $context): void
     {
-        $isPublic = false;
+        $isPublic = true;
         foreach ($context->getChildren() as $child) {
             if ($child->kind !== NodeKind::Modifier) {
                 continue;
             }
-            if (strtolower($context->file->getText($child)) !== 'public') {
+
+            $modifier = strtolower($context->file->getText($child));
+            if (!in_array($modifier, ['public', 'protected', 'private'], strict: true)) {
                 continue;
             }
 
-            $isPublic = true;
+            $isPublic = $modifier === 'public';
             break;
-        }
-        if (!$isPublic) {
-            return;
         }
 
         $nameNode = $context->file->getFirstDescendant(
@@ -81,8 +80,14 @@ final class PublicUnderscoreMethodRule implements Rule
             return;
         }
 
+        if (!$isPublic && preg_match('/^_(?:get|set)[A-Z]/', $name) === 1) {
+            return;
+        }
+
         $context->report(Issue::new(
-            sprintf('Public method name "%s" must not be prefixed with underscore.', $name),
+            $isPublic
+                ? sprintf('Public method name "%s" must not be prefixed with underscore.', $name)
+                : sprintf('Non-public method name "%s" should not be prefixed with underscore.', $name),
             $nameNode->span,
         ));
     }

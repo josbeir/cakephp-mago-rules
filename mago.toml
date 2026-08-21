@@ -1,4 +1,4 @@
-extends = "mago.cakephp.toml"
+extends = "cakephp.mago.toml"
 
 [source]
 paths = ["src", "tests/Unit"]

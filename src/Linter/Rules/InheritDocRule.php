@@ -44,17 +44,18 @@ final class InheritDocRule implements Rule
                 $docblock->span->start + $match[0][1],
                 $docblock->span->start + $match[0][1] + strlen($match[0][0]),
             );
+            $content = $docblock->content();
+            if (strcasecmp($content, '{@inheritDoc}') === 0) {
+                $wrappedSpan = new Span($span->start - 1, $span->end + 1);
+                $context->report(Issue::new(
+                    'Use @inheritDoc when inheriting the complete docblock.',
+                    $wrappedSpan,
+                )->withEdit(TextEdit::replace($wrappedSpan, '@inheritDoc')));
+                continue;
+            }
             if ($match[0][0] !== '@inheritDoc') {
                 $context->report(Issue::new(
                     '@inheritDoc must use CakePHP capitalization.',
-                    $span,
-                )->withEdit(TextEdit::replace($span, '@inheritDoc')));
-                continue;
-            }
-            $content = $docblock->content();
-            if ($content === '{@inheritDoc}') {
-                $context->report(Issue::new(
-                    'Use @inheritDoc when inheriting the complete docblock.',
                     $span,
                 )->withEdit(TextEdit::replace($span, '@inheritDoc')));
                 continue;
