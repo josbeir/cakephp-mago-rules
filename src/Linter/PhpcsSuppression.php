@@ -19,6 +19,9 @@ final class PhpcsSuppression
     public static function isSuppressed(SourceFile $file, Span $span): bool
     {
         $before = substr($file->contents, 0, $span->start);
+        if (preg_match('/\/\/\s*phpcs:ignore[^\r\n]*(?:\r?\n)?\s*\z/', $before) === 1) {
+            return true;
+        }
         $disable = strripos($before, 'phpcs:disable');
         if ($disable === false) {
             return false;

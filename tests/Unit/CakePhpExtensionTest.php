@@ -20,6 +20,9 @@ final class CakePhpExtensionTest extends TestCase
                 'mago-cakephp/public-method-underscore',
                 'mago-cakephp/elseif',
                 'mago-cakephp/function-docblock',
+                'mago-cakephp/docblock-alignment',
+                'mago-cakephp/inherit-doc',
+                'mago-cakephp/return-type-docblock',
             ],
             array_map(static fn($rule): string => $rule->getDefinition()->code, $extension->linterRules),
         );

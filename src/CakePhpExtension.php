@@ -5,9 +5,12 @@ declare(strict_types = 1);
 namespace MagoCakePHP;
 
 use Mago\Sdk\Extension;
+use MagoCakePHP\Linter\Rules\DocblockAlignmentRule;
 use MagoCakePHP\Linter\Rules\ElseIfDeclarationRule;
 use MagoCakePHP\Linter\Rules\FunctionDocblockRule;
+use MagoCakePHP\Linter\Rules\InheritDocRule;
 use MagoCakePHP\Linter\Rules\PublicUnderscoreMethodRule;
+use MagoCakePHP\Linter\Rules\ReturnTypeDocblockRule;
 use MagoCakePHP\Linter\Rules\TraitSuffixRule;
 
 final class CakePhpExtension
@@ -35,6 +38,9 @@ final class CakePhpExtension
                 new PublicUnderscoreMethodRule(),
                 new ElseIfDeclarationRule(),
                 new FunctionDocblockRule($options),
+                new DocblockAlignmentRule(),
+                new InheritDocRule(),
+                new ReturnTypeDocblockRule(),
             ],
         );
     }

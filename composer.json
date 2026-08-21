@@ -4,7 +4,7 @@
   "type": "library",
   "license": "MIT",
   "require": {
-    "php": "^8.1",
+    "php": "^8.3",
     "carthage-software/mago": "^1.47"
   },
   "require-dev": {
@@ -22,10 +22,10 @@
   },
   "scripts": {
     "test": "phpunit",
-    "cs-check": "mago format --check && mago lint --only no-short-opening-tag,no-error-control-operator,no-assign-in-condition,no-redundant-parentheses,no-redundant-final,no-redundant-use,no-closing-tag,mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock",
-    "cs-fix": "mago format && mago lint --fix --only no-short-opening-tag,no-error-control-operator,no-assign-in-condition,no-redundant-parentheses,no-redundant-final,no-redundant-use,no-closing-tag,mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock",
+    "cs-check": "mago format --check && mago lint",
+    "cs-fix": "mago format && mago lint --fix",
     "validate-extension": "mago --workspace tests/corpus extension validate",
-    "lint-corpus": "mago --workspace tests/corpus lint --only mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock"
+    "lint-corpus": "mago --workspace tests/corpus lint --only block-statement,mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock,mago-cakephp/docblock-alignment,mago-cakephp/inherit-doc,mago-cakephp/return-type-docblock"
   },
   "config": {
     "sort-packages": true

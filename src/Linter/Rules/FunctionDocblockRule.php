@@ -10,8 +10,8 @@ use Mago\Sdk\Linter\RuleDefinition;
 use Mago\Sdk\Reporting\Issue;
 use Mago\Sdk\Reporting\Level;
 use Mago\Sdk\Syntax\NodeKind;
-use Mago\Sdk\Syntax\TriviaKind;
 use MagoCakePHP\CakePhpOptions;
+use MagoCakePHP\Linter\Docblock;
 use MagoCakePHP\Linter\PathMatcher;
 use MagoCakePHP\Linter\PhpcsSuppression;
 
@@ -52,23 +52,26 @@ final class FunctionDocblockRule implements Rule
             return;
         }
 
-        $closest = null;
-        foreach ($context->file->getTrivia() as $trivia) {
-            if ($trivia->kind !== TriviaKind::DocBlockComment || $trivia->span->end > $context->node->span->start) {
-                continue;
+        $docblock = Docblock::forDeclaration($context->file, $context->node->span);
+        if ($docblock !== null) {
+            $text = $context->file->getText($docblock->span);
+            if (preg_match('/@(param|return|throws)\s{2,}/', $text, $match, PREG_OFFSET_CAPTURE) === 1) {
+                $start = $docblock->span->start + $match[0][1] + strlen($match[1][0]);
+                $span = new \Mago\Sdk\Span($start, $start + strlen($match[0][0]) - strlen($match[1][0]));
+                $context->report(Issue::new(
+                    'Docblock tags must be followed by one space.',
+                    $span,
+                )->withEdit(\Mago\Sdk\Reporting\TextEdit::replace($span, ' ')));
             }
-            if ($closest === null || $trivia->span->end > $closest->span->end) {
-                $closest = $trivia;
+            if (preg_match('/@throws\s*(?:\r?\n|\*\/)/', $text, $match, PREG_OFFSET_CAPTURE) === 1) {
+                $span = new \Mago\Sdk\Span(
+                    $docblock->span->start + $match[0][1],
+                    $docblock->span->start + $match[0][1] + strlen($match[0][0]),
+                );
+                $context->report(Issue::new('@throws must include an exception type and description.', $span));
             }
-        }
 
-        if ($closest !== null) {
-            $between = $context->file->getText(new \Mago\Sdk\Span($closest->span->end, $context->node->span->start));
-            // Attributes may appear between a docblock and a declaration.
-            $between = preg_replace('/#\[.*?\]/s', '', $between) ?? $between;
-            if (trim($between) === '') {
-                return;
-            }
+            return;
         }
 
         $context->report(Issue::new('Missing doc comment for function or method.', $context->node->span));

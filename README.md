@@ -26,13 +26,13 @@ or project bootstrap is required. Projects that combine several extensions in
 one PHP worker can still override `[extension-hosts.cakephp]` and use their
 own entrypoint.
 
-Run `mago extension validate` and `mago format`. For strict CakePHP
-compatibility, use an explicit lint allow-list: Mago's normal `lint` command
-also enables its broader quality and security rules, which CakePHP PHPCS does
-not define.
+Run Mago normally. The imported configuration enables the CakePHP-compatible
+native and extension rules, while disabling Mago's unrelated default rules.
+Projects can explicitly enable additional Mago rules in their own config.
 
 ```sh
-mago lint --only no-short-opening-tag,no-error-control-operator,no-assign-in-condition,no-redundant-parentheses,no-redundant-final,no-redundant-use,no-closing-tag,mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock
+mago format --check
+mago lint
 ```
 
 ## What this does—and does not—replace
@@ -71,14 +71,14 @@ ruleset. Every completed custom rule has a corpus fixture.
 | `elseif`, never `else if` | `mago-cakephp/elseif` with safe edit | corpus-covered |
 | Function/method docblocks outside tests | `mago-cakephp/function-docblock` | corpus-covered |
 | PHPDoc tag alignment and type ordering | Dedicated extension rules over Mago's docblock trivia | planned |
-| CakePHP control-structure body rules | AST-backed extension rules | planned |
+| Control-structure bodies use braces | Native Mago `block-statement` | corpus-covered |
+| `@inheritDoc`, function/method docblock alignment, tag spacing and `@throws` completeness | `mago-cakephp` docblock rules | corpus-covered |
+| Chaining methods documented `@return $this` omit native return types | `mago-cakephp/return-type-docblock` | corpus-covered |
 | CakePHP 5.x filename-to-type roots and return-type BC exception | CakePHP 5.x compatibility suite | planned |
 | Full PHPCS/Slevomat parity | Rule-by-rule migration | tracked; no implicit equivalence claim |
 
 The CakePHP 5.x checkout is tested on every pull request; a scheduled job also
-tests the current 5.x head for drift. Mago's ordinary `lint` command enables
-additional quality and security rules. Use the explicit compatibility
-allow-list above when you need CakePHP CodeSniffer-like behavior only.
+tests the current 5.x head for drift.
 
 ## Development validation
 

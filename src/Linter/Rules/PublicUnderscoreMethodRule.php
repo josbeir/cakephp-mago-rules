@@ -42,7 +42,26 @@ final class PublicUnderscoreMethodRule implements Rule
             return;
         }
 
-        if (str_starts_with($matches[1], '__')) {
+        $magicMethods = [
+            '__construct',
+            '__destruct',
+            '__call',
+            '__callStatic',
+            '__debugInfo',
+            '__get',
+            '__set',
+            '__isset',
+            '__unset',
+            '__sleep',
+            '__wakeup',
+            '__serialize',
+            '__unserialize',
+            '__toString',
+            '__set_state',
+            '__clone',
+            '__invoke',
+        ];
+        if (in_array($matches[1], $magicMethods, true)) {
             return;
         }
 
