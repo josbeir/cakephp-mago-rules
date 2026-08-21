@@ -39,9 +39,7 @@ mago lint --only no-short-opening-tag,no-error-control-operator,no-assign-in-con
 
 This package is a focused CakePHP compatibility layer for Mago, not a
 drop-in replacement for PHP_CodeSniffer or every CakePHP CodeSniffer sniff.
-Its covered rules are listed in the
-[compatibility matrix](docs/compatibility-matrix.md); anything marked
-**planned** is deliberately not enforced yet.
+Anything marked **planned** below is deliberately not enforced yet.
 
 Mago is a strong fit when you want one fast PHP toolchain for formatting and
 linting, safe automatic fixes for supported diagnostics, and CakePHP-specific
@@ -58,6 +56,29 @@ the transition if the CakePHP standard is a release gate.
 Formatter output is not intended to be byte-for-byte identical to PHPCBF
 output. Compatibility means matching the documented, supported policy—not
 emulating PHP_CodeSniffer internals.
+
+## Compatibility matrix
+
+The matrix tracks CakePHP CodeSniffer 5.3.x and the CakePHP 5.x framework
+ruleset. Every completed custom rule has a corpus fixture.
+
+| CakePHP concern | Mago implementation | Status |
+| --- | --- | --- |
+| PSR-12 whitespace, braces, imports, commas and simple strings | `mago.cakephp.toml` formatter profile | validated by CakePHP 5.x corpus |
+| Short tags, silenced errors, assignments in conditions, redundant parentheses/final/use, closing tags | Native Mago rules | validated by CakePHP 5.x corpus |
+| Trait names end in `Trait` | `mago-cakephp/trait-suffix` | corpus-covered |
+| Public non-magic methods do not start with `_` | `mago-cakephp/public-method-underscore` | corpus-covered |
+| `elseif`, never `else if` | `mago-cakephp/elseif` with safe edit | corpus-covered |
+| Function/method docblocks outside tests | `mago-cakephp/function-docblock` | corpus-covered |
+| PHPDoc tag alignment and type ordering | Dedicated extension rules over Mago's docblock trivia | planned |
+| CakePHP control-structure body rules | AST-backed extension rules | planned |
+| CakePHP 5.x filename-to-type roots and return-type BC exception | CakePHP 5.x compatibility suite | planned |
+| Full PHPCS/Slevomat parity | Rule-by-rule migration | tracked; no implicit equivalence claim |
+
+The CakePHP 5.x checkout is tested on every pull request; a scheduled job also
+tests the current 5.x head for drift. Mago's ordinary `lint` command enables
+additional quality and security rules. Use the explicit compatibility
+allow-list above when you need CakePHP CodeSniffer-like behavior only.
 
 ## Development validation
 
