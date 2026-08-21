@@ -90,6 +90,7 @@ therefore implements only the small line-oriented PHPDoc policies listed above.
 
 Run `composer run cs-check`, `composer test`, `composer run lint-corpus`,
 `composer run test-fixes`, and `composer run test-consumer`. To validate the
-extension rules against CakePHP itself, pass an existing shallow checkout to
-`scripts/check-cakephp-6.sh /path/to/cakephp`; without an argument the script
-creates a temporary shallow clone of CakePHP 6.x.
+extension rules against CakePHP itself, pass an existing shallow checkout with
+`scripts/check-cakephp-6.sh --workspace /path/to/cakephp`; without an argument
+the script creates a temporary shallow clone of CakePHP 6.x. A bare positional
+path remains supported as shorthand.
