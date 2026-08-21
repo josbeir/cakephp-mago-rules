@@ -1,0 +1,10 @@
+extends = "mago.cakephp.toml"
+
+[source]
+paths = ["src", "tests/Unit"]
+
+[extension-hosts.cakephp]
+enabled = false
+
+[extension-hosts.cakephp-dev]
+command = ["php", "bin/mago-cakephp-worker"]

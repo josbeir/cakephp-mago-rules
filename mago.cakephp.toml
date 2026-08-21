@@ -1,0 +1,24 @@
+# Import this file from a project's mago.toml with:
+# extends = "vendor/josbeir/cakephp-mago-rules/mago.cakephp.toml"
+
+[extension-hosts.cakephp]
+command = ["php", "vendor/josbeir/cakephp-mago-rules/bin/mago-cakephp-worker"]
+
+[formatter]
+preset = "psr-12"
+print-width = 120
+single-quote = true
+trailing-comma = true
+space-after-cast-unary-prefix-operators = false
+empty-line-before-return = true
+sort-uses = "alphanumeric-ascending"
+expand-use-groups = true
+
+[linter.rules]
+no-short-opening-tag = { enabled = true, level = "error" }
+no-error-control-operator = { enabled = true, level = "error" }
+no-assign-in-condition = { enabled = true, level = "error" }
+no-redundant-parentheses = { enabled = true, level = "warning" }
+no-redundant-final = { enabled = true, level = "warning" }
+no-redundant-use = { enabled = true, level = "warning" }
+no-closing-tag = { enabled = true, level = "warning" }

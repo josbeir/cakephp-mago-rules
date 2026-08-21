@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Mago\Sdk\Worker;
+use MagoCakePHP\CakePhpExtension;
+
+$autoload = dirname(__DIR__, 3) . '/autoload.php';
+if (!is_file($autoload)) {
+    // Support running directly from a source checkout as well as Composer's
+    // installed vendor/josbeir/cakephp-mago-rules layout.
+    $autoload = dirname(__DIR__) . '/vendor/autoload.php';
+}
+
+require $autoload;
+
+(new Worker(CakePhpExtension::create()))->run();
