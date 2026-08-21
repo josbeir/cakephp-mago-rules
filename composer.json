@@ -1,6 +1,6 @@
 {
   "name": "josbeir/cakephp-mago-rules",
-  "description": "CakePHP coding-standard compatibility rules for Mago.",
+  "description": "CakePHP-specific linting rules and formatter defaults for Mago.",
   "type": "library",
   "license": "MIT",
   "require": {
@@ -23,9 +23,11 @@
   "scripts": {
     "test": "phpunit",
     "cs-check": "mago format --check && mago lint",
-    "cs-fix": "mago format && mago lint --fix",
+    "cs-fix": "mago format && mago lint --fix --format-after-fix --fail-on-remaining",
     "validate-extension": "mago --workspace tests/corpus extension validate",
-    "lint-corpus": "mago --workspace tests/corpus lint --only block-statement,mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock,mago-cakephp/docblock-alignment,mago-cakephp/inherit-doc,mago-cakephp/return-type-docblock"
+    "lint-corpus": "mago --workspace tests/corpus lint --only mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock,mago-cakephp/docblock-tag-spacing,mago-cakephp/throws-tag,mago-cakephp/inherit-doc,mago-cakephp/chaining-return-type",
+    "test-consumer": "scripts/check-consumer.sh",
+    "test-fixes": "scripts/check-fixes.sh"
   },
   "config": {
     "sort-packages": true

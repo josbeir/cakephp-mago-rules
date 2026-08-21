@@ -19,7 +19,7 @@ final class Sample
 
     // @mago-expect lint:mago-cakephp/public-method-underscore
     // @mago-expect lint:mago-cakephp/function-docblock
-    public function _hidden(): void
+    static public function _hidden(): void
     {
     }
 
@@ -36,7 +36,7 @@ final class Sample
     {
     }
 
-    // @mago-expect lint:mago-cakephp/return-type-docblock
+    // @mago-expect lint:mago-cakephp/chaining-return-type
     /**
      * @return $this
      */
@@ -45,7 +45,7 @@ final class Sample
         return $this;
     }
 
-    // @mago-expect lint:mago-cakephp/function-docblock
+    // @mago-expect lint:mago-cakephp/docblock-tag-spacing
     /**
      * @return  string
      */
@@ -54,13 +54,47 @@ final class Sample
         return 'ok';
     }
 
-    // @mago-expect lint:mago-cakephp/docblock-alignment
-      /**
-       * Returns a value.
-       */
-    public function misaligned(): void
+    // @mago-expect lint:mago-cakephp/throws-tag
+    /**
+     * Throws an exception.
+     *
+     * @throws
+     */
+    public function incompleteThrows(): void
     {
     }
+
+    /**
+     * @throws \RuntimeException When the operation fails.
+     */
+    protected function _allowedProtectedMethod(): void
+    {
+    }
+
+    /**
+     * {@inheritDoc} Additional details are allowed after an inline tag.
+     */
+    public function partialInheritance(): void
+    {
+    }
+
+    /**
+     * Magic methods are exempt from the underscore rule.
+     *
+     * @return mixed
+     */
+    public function __get(string $name): mixed
+    {
+        return null;
+    }
+}
+
+interface FluentInterface
+{
+    /**
+     * @return $this
+     */
+    public function chain(): self;
 }
 
 if ($first) {

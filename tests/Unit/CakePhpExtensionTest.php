@@ -13,16 +13,17 @@ final class CakePhpExtensionTest extends TestCase
     {
         $extension = CakePhpExtension::create();
 
-        self::assertSame('mago-cakephp/codesniffer', $extension->identifier);
+        self::assertSame('mago-cakephp/rules', $extension->identifier);
         self::assertSame(
             [
                 'mago-cakephp/trait-suffix',
                 'mago-cakephp/public-method-underscore',
                 'mago-cakephp/elseif',
                 'mago-cakephp/function-docblock',
-                'mago-cakephp/docblock-alignment',
+                'mago-cakephp/docblock-tag-spacing',
+                'mago-cakephp/throws-tag',
                 'mago-cakephp/inherit-doc',
-                'mago-cakephp/return-type-docblock',
+                'mago-cakephp/chaining-return-type',
             ],
             array_map(static fn($rule): string => $rule->getDefinition()->code, $extension->linterRules),
         );

@@ -2,7 +2,7 @@ version = "1.47"
 php-version = "8.2"
 
 [source]
-paths = ["config", "src", "tests"]
+paths = ["config", "src"]
 
 [extension-hosts.cakephp]
 command = ["php", "worker.php"]

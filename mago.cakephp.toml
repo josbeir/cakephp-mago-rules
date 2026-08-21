@@ -4,6 +4,8 @@
 [extension-hosts.cakephp]
 command = ["php", "vendor/josbeir/cakephp-mago-rules/bin/mago-cakephp-worker"]
 
+# Mago owns generic formatting. These settings pin the CakePHP-specific
+# choices that differ from, or are important additions to, PSR-12.
 [formatter]
 preset = "psr-12"
 print-width = 120
@@ -14,155 +16,15 @@ empty-line-before-return = true
 sort-uses = "alphanumeric-ascending"
 expand-use-groups = true
 
+# Keep Mago's default catalogue enabled. Only CakePHP policy choices are
+# configured here; consuming projects remain free to override any rule.
 [linter.rules]
-# Mago 1.47 enables a broad quality/security catalogue by default. Disable its
-# non-CakePHP rules here so importing this file makes plain `mago lint` a
-# stable CakePHP compatibility profile. Update this list when Mago changes
-# its default rule set.
-array-style = { enabled = false }
-assert-description = { enabled = false }
-assertion-style = { enabled = false }
-braced-string-interpolation = { enabled = false }
-class-name = { enabled = false }
-combine-consecutive-issets = { enabled = false }
-constant-condition = { enabled = false }
-constant-name = { enabled = false }
-cyclomatic-complexity = { enabled = false }
-deprecated-cast = { enabled = false }
-deprecated-shell-execute-string = { enabled = false }
-deprecated-switch-semicolon = { enabled = false }
-disallowed-functions = { enabled = false }
-enum-name = { enabled = false }
-excessive-nesting = { enabled = false }
-excessive-parameter-list = { enabled = false }
-explicit-nullable-param = { enabled = false }
-explicit-octal = { enabled = false }
-file-name = { enabled = false }
-final-controller = { enabled = false }
-function-name = { enabled = false }
-halstead = { enabled = false }
-identity-comparison = { enabled = false }
-ineffective-format-ignore-next = { enabled = false }
-ineffective-format-ignore-region = { enabled = false }
-inline-variable-return = { enabled = false }
-instanceof-stringable = { enabled = false }
-interface-name = { enabled = false }
-invalid-open-tag = { enabled = false }
-kan-defect = { enabled = false }
-literal-named-argument = { enabled = false }
-loop-does-not-iterate = { enabled = false }
-lowercase-keyword = { enabled = false }
-lowercase-type-hint = { enabled = false }
-middleware-in-routes = { enabled = false }
-no-alias-function = { enabled = false }
-no-boolean-flag-parameter = { enabled = false }
-no-db-schema-change = { enabled = false }
-no-debug-symbols = { enabled = false }
-no-direct-db-query = { enabled = false }
-no-duplicate-match-arm = { enabled = false }
-no-else-clause = { enabled = false }
-no-empty = { enabled = false }
-no-empty-catch-clause = { enabled = false }
-no-empty-comment = { enabled = false }
-no-empty-loop = { enabled = false }
-no-eval = { enabled = false }
-no-ffi = { enabled = false }
-no-global = { enabled = false }
-no-goto = { enabled = false }
-no-hash-comment = { enabled = false }
-no-hash-emoji = { enabled = false }
-no-implicit-model-query = { enabled = false }
-no-ini-set = { enabled = false }
-no-insecure-comparison = { enabled = false }
-no-isset = { enabled = false }
-no-literal-password = { enabled = false }
-no-missing-format-argument = { enabled = false }
-no-multi-assignments = { enabled = false }
-no-nested-ternary = { enabled = false }
-no-noop = { enabled = false }
-no-only = { enabled = false }
-no-php-tag-terminator = { enabled = false }
-no-protected-in-final = { enabled = false }
-no-redundant-binary-string-prefix = { enabled = false }
-no-redundant-block = { enabled = false }
-no-redundant-continue = { enabled = false }
-no-redundant-file = { enabled = false }
-no-redundant-isset = { enabled = false }
-no-redundant-label = { enabled = false }
-no-redundant-literal-return = { enabled = false }
-no-redundant-math = { enabled = false }
-no-redundant-method-override = { enabled = false }
-no-redundant-nullsafe = { enabled = false }
-no-redundant-readonly = { enabled = false }
-no-redundant-string-concat = { enabled = false }
-no-redundant-write-visibility = { enabled = false }
-no-redundant-yield-from = { enabled = false }
-no-request-all = { enabled = false }
-no-request-variable = { enabled = false }
-no-roles-as-capabilities = { enabled = false }
-no-self-assignment = { enabled = false }
-no-shell-execute-string = { enabled = false }
-no-shorthand-ternary = { enabled = false }
-no-sprintf-concat = { enabled = false }
-no-trailing-space = { enabled = false }
-no-underscore-class = { enabled = false }
-no-unescaped-output = { enabled = false }
-no-unsafe-finally = { enabled = false }
-no-variable-variable = { enabled = false }
-no-void-reference-return = { enabled = false }
-optional-param-order = { enabled = false }
-prefer-anonymous-migration = { enabled = false }
-prefer-array-validation-rules = { enabled = false }
-prefer-arrow-function = { enabled = false }
-prefer-casts-method = { enabled = false }
-prefer-dedicated-status-assertion = { enabled = false }
-prefer-early-continue = { enabled = false }
-prefer-fake-helper = { enabled = false }
-prefer-first-class-callable = { enabled = false }
-prefer-interface = { enabled = false }
-prefer-static-closure = { enabled = false }
-prefer-view-array = { enabled = false }
-prefer-while-loop = { enabled = false }
-psl-array-functions = { enabled = false }
-psl-data-structures = { enabled = false }
-psl-datetime = { enabled = false }
-psl-math-functions = { enabled = false }
-psl-output = { enabled = false }
-psl-randomness-functions = { enabled = false }
-psl-regex-functions = { enabled = false }
-psl-sleep-functions = { enabled = false }
-psl-string-functions = { enabled = false }
-readable-literal = { enabled = false }
-require-preg-quote-delimiter = { enabled = false }
-sensitive-parameter = { enabled = false }
-single-class-per-file = { enabled = false }
-str-contains = { enabled = false }
-str-starts-with = { enabled = false }
-strict-assertions = { enabled = false }
-strict-behavior = { enabled = false }
-strict-types = { enabled = false }
-suspicious-explode-arguments = { enabled = false }
-tagged-fixme = { enabled = false }
-tagged-todo = { enabled = false }
-tainted-data-to-sink = { enabled = false }
-too-many-enum-cases = { enabled = false }
-too-many-methods = { enabled = false }
-too-many-properties = { enabled = false }
-trait-name = { enabled = false }
-use-compound-assignment = { enabled = false }
-use-dedicated-expectation = { enabled = false }
-use-simpler-expectation = { enabled = false }
-use-specific-assertions = { enabled = false }
-use-specific-expectations = { enabled = false }
-use-wp-functions = { enabled = false }
-valid-docblock = { enabled = false }
-
-no-short-opening-tag = { enabled = true, level = "error" }
-switch-continue-to-break = { enabled = false }
-no-error-control-operator = { enabled = true, level = "error" }
-no-assign-in-condition = { enabled = true, level = "error" }
-no-redundant-parentheses = { enabled = true, level = "warning" }
-no-redundant-final = { enabled = true, level = "warning" }
-no-redundant-use = { enabled = true, level = "warning" }
-no-closing-tag = { enabled = true, level = "warning" }
+array-style = { enabled = true, level = "error", style = "short" }
 block-statement = { enabled = true, level = "error" }
+no-short-opening-tag = { enabled = true, level = "error" }
+no-error-control-operator = { enabled = true, level = "error" }
+no-assign-in-condition = { enabled = true, level = "error", ignore-while-statements = false }
+no-redundant-parentheses = { enabled = true, level = "error" }
+no-redundant-final = { enabled = true, level = "error" }
+no-redundant-use = { enabled = true, level = "error" }
+no-closing-tag = { enabled = true, level = "error" }

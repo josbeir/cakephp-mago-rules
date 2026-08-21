@@ -12,7 +12,6 @@ use Mago\Sdk\Reporting\Level;
 use Mago\Sdk\Reporting\TextEdit;
 use Mago\Sdk\Span;
 use Mago\Sdk\Syntax\NodeKind;
-use MagoCakePHP\Linter\PhpcsSuppression;
 
 final class ElseIfDeclarationRule implements Rule
 {
@@ -42,10 +41,6 @@ final class ElseIfDeclarationRule implements Rule
 
         $start = $context->node->span->start + $matches[1][1];
         $span = new Span($start, $start + strlen($matches[1][0]));
-        if (PhpcsSuppression::isSuppressed($context->file, $span)) {
-            return;
-        }
-
         $context->report(Issue::new(
             'Usage of ELSE IF is not allowed; use ELSEIF instead.',
             $span,

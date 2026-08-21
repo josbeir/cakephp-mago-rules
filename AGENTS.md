@@ -2,49 +2,38 @@
 
 ## Project Structure & Module Organization
 
-- `src/` contains the PHP extension API and Mago linter rules. Keep reusable
-  helpers under `src/Linter/` and individual rules under `src/Linter/Rules/`.
-- `bin/mago-cakephp-worker` is the package-owned PHP worker launched by Mago.
-- `mago.cakephp.toml` is the importable CakePHP formatter and native-rule
-  configuration.
-- `tests/Unit/` holds PHPUnit tests. `tests/corpus/` verifies extension-worker
-  behavior, while `tests/cakephp5/` configures checks against CakePHP 5.x.
-- `docs/compatibility-matrix.md` is the authoritative mapping from CakePHP
-  CodeSniffer behavior to formatter, native Mago, or extension rules.
+- `src/` contains the public extension factory and CakePHP-specific Mago rules.
+  Put shared syntax and PHPDoc helpers in `src/Linter/`; keep one rule per file
+  under `src/Linter/Rules/`.
+- `bin/mago-cakephp-worker` is the package-owned extension host.
+- `mago.cakephp.toml` is the consumer preset. It must remain additive to Mago's
+  defaults and contain only CakePHP policy.
+- `tests/corpus/` covers diagnostics, `tests/fixer/` covers exact safe edits,
+  and `tests/consumer/` verifies the installed one-line `extends` workflow.
 
 ## Build, Test, and Development Commands
 
-- `composer update --no-interaction --prefer-dist` installs or refreshes PHP
-  dependencies and the Mago binary launcher.
-- `composer test` runs PHPUnit unit tests.
-- `composer run validate-extension` starts the corpus worker and verifies Mago
-  extension registration.
-- `composer run lint-corpus` verifies expected external-rule diagnostics against
-  the focused corpus; fixtures use `@mago-expect` annotations intentionally.
-- `scripts/check-cakephp-5.sh /path/to/cakephp` validates rules against an
-  existing shallow CakePHP 5.x checkout. Omit the argument to clone one.
+- `composer run cs-check` checks formatting and runs the full shipped preset.
+- `composer test` runs PHPUnit registration and helper tests.
+- `composer run validate-extension` verifies worker startup and registration.
+- `composer run lint-corpus` checks isolated expected diagnostics.
+- `composer run test-fixes` compares safe fixes with committed output.
+- `composer run test-consumer` runs plain Mago commands as an installed project.
+- `scripts/check-cakephp-5.sh /path/to/cakephp` checks custom rules against a
+  shallow CakePHP 5.x checkout.
 
-## Coding Style & Naming Conventions
+## Coding Style & Rules
 
-Use PHP 8.1-compatible, strict PHP: start files with `declare(strict_types=1);`,
-use four-space indentation, and keep classes `final` unless extension is
-intentional. Name rule classes with a `Rule` suffix, for example
-`TraitSuffixRule`; use vendor-qualified kebab-case Mago codes such as
-`mago-cakephp/trait-suffix`. Prefer narrow AST targets and exact `Span` edits.
-Run `mago format` for formatting; do not add unrelated default Mago lint rules
-to the CakePHP compatibility allow-list.
+Target PHP 8.3+, use strict types and four-space indentation, and keep classes
+`final` unless extension is intentional. Rule classes use a `Rule` suffix and
+codes use `mago-cakephp/kebab-case`. Prefer Mago syntax nodes and exact `Span`
+edits; use source-text parsing only where the extension SDK exposes trivia.
+Generic formatting and quality rules belong to Mago, not this extension.
 
-## Testing Guidelines
+## Testing and Contributions
 
-Add a PHPUnit test for registration or deterministic helper behavior, plus a
-corpus case for each diagnostic or fix. Update the compatibility matrix whenever
-a CakePHP CodeSniffer rule changes status. Validate formatter/fixer changes
-against CakePHP 5.x before merging.
-
-## Commit & Pull Request Guidelines
-
-This workspace has no accessible Git history, so no local convention can be
-derived. Use concise imperative Conventional Commit-style subjects, for example
-`feat: add CakePHP docblock rule`. Pull requests should explain compatibility
-impact, list matrix changes, include validation output, and link relevant Mago
-or CakePHP issues.
+Every rule needs valid and invalid corpus cases; every edit needs an exact,
+idempotent fixer fixture. Run all commands above before opening a pull request.
+Use concise Conventional Commit subjects such as `feat: add CakePHP rule`.
+Pull requests should describe user-visible configuration changes, rule-code or
+fix behavior changes, and CakePHP corpus results.

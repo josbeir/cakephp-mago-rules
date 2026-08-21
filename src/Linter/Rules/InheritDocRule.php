@@ -12,7 +12,7 @@ use Mago\Sdk\Reporting\Level;
 use Mago\Sdk\Reporting\TextEdit;
 use Mago\Sdk\Span;
 use Mago\Sdk\Syntax\NodeKind;
-use Mago\Sdk\Syntax\TriviaKind;
+use MagoCakePHP\Linter\Docblock;
 
 final class InheritDocRule implements Rule
 {
@@ -25,7 +25,7 @@ final class InheritDocRule implements Rule
             code: 'mago-cakephp/inherit-doc',
             name: 'CakePHP inheritDoc',
             description: 'Enforces CakePHP @inheritDoc spelling and placement.',
-            defaultLevel: Level::Warning,
+            defaultLevel: Level::Error,
             defaultEnabled: true,
             targets: [NodeKind::Program],
         );
@@ -36,17 +36,13 @@ final class InheritDocRule implements Rule
      */
     public function lint(LintContext $context): void
     {
-        foreach ($context->file->getTrivia() as $trivia) {
-            if ($trivia->kind !== TriviaKind::DocBlockComment) {
-                continue;
-            }
-            $text = $context->file->getText($trivia->span);
-            if (preg_match('/@inheritdoc/i', $text, $match, PREG_OFFSET_CAPTURE) !== 1) {
+        foreach (Docblock::all($context->file) as $docblock) {
+            if (preg_match('/@inheritdoc\b/i', $docblock->text, $match, PREG_OFFSET_CAPTURE) !== 1) {
                 continue;
             }
             $span = new Span(
-                $trivia->span->start + $match[0][1],
-                $trivia->span->start + $match[0][1] + strlen($match[0][0]),
+                $docblock->span->start + $match[0][1],
+                $docblock->span->start + $match[0][1] + strlen($match[0][0]),
             );
             if ($match[0][0] !== '@inheritDoc') {
                 $context->report(Issue::new(
@@ -55,9 +51,7 @@ final class InheritDocRule implements Rule
                 )->withEdit(TextEdit::replace($span, '@inheritDoc')));
                 continue;
             }
-            $content = preg_replace('/^\s*\/\*\*|\*\/\s*$/', '', $text) ?? $text;
-            $content = preg_replace('/^\s*\*\s?/m', '', $content) ?? $content;
-            $content = trim($content);
+            $content = $docblock->content();
             if ($content === '{@inheritDoc}') {
                 $context->report(Issue::new(
                     'Use @inheritDoc when inheriting the complete docblock.',

@@ -10,30 +10,20 @@ use Mago\Sdk\Linter\RuleDefinition;
 use Mago\Sdk\Reporting\Issue;
 use Mago\Sdk\Reporting\Level;
 use Mago\Sdk\Syntax\NodeKind;
-use MagoCakePHP\CakePhpOptions;
 use MagoCakePHP\Linter\Docblock;
 use MagoCakePHP\Linter\PathMatcher;
-use MagoCakePHP\Linter\PhpcsSuppression;
 
 final class FunctionDocblockRule implements Rule
 {
     /**
-     * @param CakePhpOptions $options Project-specific path exemptions.
-     */
-    public function __construct(
-        private readonly CakePhpOptions $options,
-    ) {
-    }
-
-    /**
-     * Describes the rule for Mago registration.
+     * Describes the CakePHP function-docblock rule.
      */
     public function getDefinition(): RuleDefinition
     {
         return new RuleDefinition(
             code: 'mago-cakephp/function-docblock',
             name: 'CakePHP function docblock',
-            description: 'Requires a directly attached docblock for functions and methods.',
+            description: 'Requires a directly attached docblock for functions and methods outside tests.',
             defaultLevel: Level::Error,
             defaultEnabled: true,
             targets: [NodeKind::Function, NodeKind::Method],
@@ -41,36 +31,14 @@ final class FunctionDocblockRule implements Rule
     }
 
     /**
-     * Reports declarations without a directly attached docblock.
+     * Reports declarations without an attached docblock outside tests.
      */
     public function lint(LintContext $context): void
     {
-        if (PathMatcher::matches($context->file->path, $this->options->functionDocblockExcludes)) {
+        if (PathMatcher::matches($context->file->path, ['tests/**', '**/tests/**'])) {
             return;
         }
-        if (PhpcsSuppression::isSuppressed($context->file, $context->node->span)) {
-            return;
-        }
-
-        $docblock = Docblock::forDeclaration($context->file, $context->node->span);
-        if ($docblock !== null) {
-            $text = $context->file->getText($docblock->span);
-            if (preg_match('/@(param|return|throws)\s{2,}/', $text, $match, PREG_OFFSET_CAPTURE) === 1) {
-                $start = $docblock->span->start + $match[0][1] + strlen($match[1][0]);
-                $span = new \Mago\Sdk\Span($start, $start + strlen($match[0][0]) - strlen($match[1][0]));
-                $context->report(Issue::new(
-                    'Docblock tags must be followed by one space.',
-                    $span,
-                )->withEdit(\Mago\Sdk\Reporting\TextEdit::replace($span, ' ')));
-            }
-            if (preg_match('/@throws\s*(?:\r?\n|\*\/)/', $text, $match, PREG_OFFSET_CAPTURE) === 1) {
-                $span = new \Mago\Sdk\Span(
-                    $docblock->span->start + $match[0][1],
-                    $docblock->span->start + $match[0][1] + strlen($match[0][0]),
-                );
-                $context->report(Issue::new('@throws must include an exception type and description.', $span));
-            }
-
+        if (Docblock::forDeclaration($context->file, $context->node->span) !== null) {
             return;
         }
 

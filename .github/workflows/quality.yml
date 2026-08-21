@@ -40,7 +40,7 @@ jobs:
       - name: Validate Composer metadata
         run: composer validate --no-check-publish
 
-      - name: Check formatting and CakePHP-compatible lint
+      - name: Check formatting and linting
         run: composer run cs-check
 
       - name: Run unit tests
@@ -50,6 +50,11 @@ jobs:
         run: |
           composer run validate-extension
           composer run lint-corpus
+
+      - name: Test installed consumer configuration
+        run: |
+          composer run test-consumer
+          composer run test-fixes
 
   cakephp-5:
     name: CakePHP 5.x compatibility

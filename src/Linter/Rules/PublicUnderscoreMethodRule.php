@@ -10,7 +10,6 @@ use Mago\Sdk\Linter\RuleDefinition;
 use Mago\Sdk\Reporting\Issue;
 use Mago\Sdk\Reporting\Level;
 use Mago\Sdk\Syntax\NodeKind;
-use MagoCakePHP\Linter\PhpcsSuppression;
 
 final class PublicUnderscoreMethodRule implements Rule
 {
@@ -34,13 +33,30 @@ final class PublicUnderscoreMethodRule implements Rule
      */
     public function lint(LintContext $context): void
     {
-        if (PhpcsSuppression::isSuppressed($context->file, $context->node->span)) {
+        $isPublic = false;
+        foreach ($context->getChildren() as $child) {
+            if ($child->kind !== NodeKind::Modifier) {
+                continue;
+            }
+            if (strtolower($context->file->getText($child)) !== 'public') {
+                continue;
+            }
+
+            $isPublic = true;
+            break;
+        }
+        if (!$isPublic) {
             return;
         }
 
-        if (preg_match('/\bpublic\s+(?:static\s+)?function\s+(_[A-Za-z0-9_]+)/', $context->getText(), $matches) !== 1) {
+        $nameNode = $context->file->getFirstDescendant(
+            $context->node,
+            NodeKind::LocalIdentifier,
+        ) ?? $context->file->getFirstDescendant($context->node, NodeKind::Identifier);
+        if ($nameNode === null) {
             return;
         }
+        $name = $context->file->getText($nameNode);
 
         $magicMethods = [
             '__construct',
@@ -61,13 +77,13 @@ final class PublicUnderscoreMethodRule implements Rule
             '__clone',
             '__invoke',
         ];
-        if (in_array($matches[1], $magicMethods, true)) {
+        if (!str_starts_with($name, '_') || in_array(needle: $name, haystack: $magicMethods, strict: true)) {
             return;
         }
 
         $context->report(Issue::new(
-            sprintf('Public method name "%s" must not be prefixed with underscore.', $matches[1]),
-            $context->node->span,
+            sprintf('Public method name "%s" must not be prefixed with underscore.', $name),
+            $nameNode->span,
         ));
     }
 }

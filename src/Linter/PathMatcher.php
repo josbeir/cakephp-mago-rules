@@ -12,9 +12,9 @@ final class PathMatcher
     public static function matches(string $path, array $patterns): bool
     {
         foreach ($patterns as $pattern) {
-            $expression = preg_quote($pattern, '~');
-            $expression = str_replace(['\\*\\*', '\\*'], ['.*', '[^/]*'], $expression);
-            if (preg_match('~^' . $expression . '$~D', str_replace('\\', '/', $path)) === 1) {
+            $expression = preg_quote(str: $pattern, delimiter: '~');
+            $expression = str_replace(search: ['\\*\\*', '\\*'], replace: ['.*', '[^/]*'], subject: $expression);
+            if (preg_match('~^' . $expression . '$~D', str_replace(search: '\\', replace: '/', subject: $path)) === 1) {
                 return true;
             }
         }
