@@ -7,7 +7,7 @@ final class Rules
     /**
      * @return $this
      */
-    public function chain()
+    public function chain(): self
     {
         return $this;
     }

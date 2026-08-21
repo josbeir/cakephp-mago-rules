@@ -1,5 +1,5 @@
 version = "1.47"
-php-version = "8.3"
+php-version = "8.4"
 extends = "vendor/josbeir/cakephp-mago-rules/mago.cakephp.toml"
 
 [source]

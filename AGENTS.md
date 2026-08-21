@@ -19,12 +19,12 @@
 - `composer run lint-corpus` checks isolated expected diagnostics.
 - `composer run test-fixes` compares safe fixes with committed output.
 - `composer run test-consumer` runs plain Mago commands as an installed project.
-- `scripts/check-cakephp-5.sh /path/to/cakephp` checks custom rules against a
-  shallow CakePHP 5.x checkout.
+- `scripts/check-cakephp-6.sh /path/to/cakephp` checks custom rules against a
+  shallow CakePHP 6.x checkout. Without a path it clones a temporary 6.x tree.
 
 ## Coding Style & Rules
 
-Target PHP 8.3+, use strict types and four-space indentation, and keep classes
+Target PHP 8.4+, use strict types and four-space indentation, and keep classes
 `final` unless extension is intentional. Rule classes use a `Rule` suffix and
 codes use `mago-cakephp/kebab-case`. Prefer Mago syntax nodes and exact `Span`
 edits; use source-text parsing only where the extension SDK exposes trivia.

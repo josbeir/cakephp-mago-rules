@@ -15,9 +15,9 @@ cp "$repo_root/tests/consumer/mago.toml" "$fixture_dir/mago.toml"
 ln -s "$repo_root" "$fixture_dir/vendor/josbeir/cakephp-mago-rules"
 
 "$repo_root/vendor/bin/mago" --workspace "$fixture_dir" lint --fix --format-after-fix --fail-on-remaining --only \
-    mago-cakephp/elseif,mago-cakephp/docblock-tag-spacing,mago-cakephp/chaining-return-type
+    mago-cakephp/elseif,mago-cakephp/docblock-tag-spacing
 
 "$repo_root/vendor/bin/mago" --workspace "$fixture_dir" lint --fix --format-after-fix --fail-on-remaining --only \
-    mago-cakephp/elseif,mago-cakephp/docblock-tag-spacing,mago-cakephp/chaining-return-type
+    mago-cakephp/elseif,mago-cakephp/docblock-tag-spacing
 
 diff -u "$repo_root/tests/fixer/expected.php" "$fixture_dir/src/Rules.php"

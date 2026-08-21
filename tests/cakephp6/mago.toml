@@ -1,5 +1,5 @@
 version = "1.47"
-php-version = "8.2"
+php-version = "8.4"
 
 [source]
 paths = ["config", "src"]

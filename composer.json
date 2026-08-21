@@ -4,7 +4,7 @@
   "type": "library",
   "license": "MIT",
   "require": {
-    "php": "^8.3",
+    "php": "^8.4",
     "carthage-software/mago": "^1.47"
   },
   "require-dev": {
@@ -25,7 +25,7 @@
     "cs-check": "mago format --check && mago lint",
     "cs-fix": "mago format && mago lint --fix --format-after-fix --fail-on-remaining",
     "validate-extension": "mago --workspace tests/corpus extension validate",
-    "lint-corpus": "mago --workspace tests/corpus lint --only mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock,mago-cakephp/docblock-tag-spacing,mago-cakephp/throws-tag,mago-cakephp/inherit-doc,mago-cakephp/chaining-return-type",
+    "lint-corpus": "mago --workspace tests/corpus lint --only mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock,mago-cakephp/docblock-tag-spacing,mago-cakephp/throws-tag,mago-cakephp/inherit-doc",
     "test-consumer": "scripts/check-consumer.sh",
     "test-fixes": "scripts/check-fixes.sh"
   },

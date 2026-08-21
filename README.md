@@ -63,7 +63,6 @@ cyclomatic-complexity = { enabled = false }
 | One space after PHPDoc tags | `mago-cakephp/docblock-tag-spacing` |
 | Exception type on `@throws` | `mago-cakephp/throws-tag` |
 | CakePHP `@inheritDoc` spelling and placement | `mago-cakephp/inherit-doc` |
-| Chaining methods documented as `@return $this` | `mago-cakephp/chaining-return-type` |
 
 Use `@mago-expect lint:<rule-code>` for an intentional local exception, or a
 Mago baseline when migrating an existing project. PHPCS suppression comments
@@ -85,12 +84,12 @@ therefore implements only the small line-oriented PHPDoc policies listed above.
 
 | Package requirement | Supported version |
 | --- | --- |
-| PHP | `^8.3` |
+| PHP | `^8.4` |
 | Mago | `^1.47` |
-| Primary target | CakePHP 5.x applications and plugins |
+| Primary target | CakePHP 6.x applications and plugins |
 
 Run `composer run cs-check`, `composer test`, `composer run lint-corpus`,
 `composer run test-fixes`, and `composer run test-consumer`. To validate the
 extension rules against CakePHP itself, pass an existing shallow checkout to
-`scripts/check-cakephp-5.sh /path/to/cakephp`; without an argument the script
-uses a local checkout when available or clones CakePHP 5.x.
+`scripts/check-cakephp-6.sh /path/to/cakephp`; without an argument the script
+creates a temporary shallow clone of CakePHP 6.x.

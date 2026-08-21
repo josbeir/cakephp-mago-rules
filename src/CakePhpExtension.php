@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace MagoCakePHP;
 
 use Mago\Sdk\Extension;
-use MagoCakePHP\Linter\Rules\ChainingReturnTypeRule;
 use MagoCakePHP\Linter\Rules\DocblockTagSpacingRule;
 use MagoCakePHP\Linter\Rules\ElseIfDeclarationRule;
 use MagoCakePHP\Linter\Rules\FunctionDocblockRule;
@@ -40,7 +39,6 @@ final class CakePhpExtension
                 new DocblockTagSpacingRule(),
                 new ThrowsTagRule(),
                 new InheritDocRule(),
-                new ChainingReturnTypeRule(),
             ],
         );
     }

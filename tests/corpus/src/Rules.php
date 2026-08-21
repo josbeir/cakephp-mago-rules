@@ -36,11 +36,10 @@ final class Sample
     {
     }
 
-    // @mago-expect lint:mago-cakephp/chaining-return-type
     /**
      * @return $this
      */
-    public function chaining(): self
+    public function chaining(): static
     {
         return $this;
     }
