@@ -9,12 +9,30 @@ command = ["php", "vendor/josbeir/cakephp-mago-rules/bin/mago-cakephp-worker"]
 [formatter]
 preset = "psr-12"
 print-width = 120
+tab-width = 4
+use-tabs = false
 single-quote = true
 trailing-comma = true
-space-after-cast-unary-prefix-operators = false
-empty-line-before-return = true
-sort-uses = "alphanumeric-ascending"
 expand-use-groups = true
+sort-uses = "alphanumeric-ascending"
+space-after-cast-unary-prefix-operators = false
+empty-line-after-opening-tag = false
+space-around-assignment-in-declare = false
+space-after-logical-not-unary-prefix-operator = false
+space-within-grouping-parenthesis = false
+preserve-breaking-argument-list = true
+preserve-breaking-parameter-list = true
+preserve-breaking-attribute-list = true
+preserve-breaking-conditional-expression = true
+preserve-breaking-condition-expression = true
+preserve-breaking-binary-expression = true
+first-method-chain-on-new-line = false
+preserve-breaking-member-access-chain = true
+empty-line-before-return = true
+omit-redundant-arithmetic-binary-expression-parentheses = true
+preserve-redundant-logical-binary-expression-parentheses = true
+separate-use-types = false
+break-promoted-properties-list = false
 
 # Keep Mago's default catalogue enabled. Only CakePHP policy choices are
 # configured here; consuming projects remain free to override any rule.
