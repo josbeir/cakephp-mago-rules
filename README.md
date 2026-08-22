@@ -41,8 +41,26 @@ mago format
 mago lint --fix --format-after-fix --fail-on-remaining
 ```
 
-The preset deliberately keeps Mago's default rule catalogue enabled. Projects
-can override native or CakePHP rules after the `extends` declaration:
+Adopting the preset is intentionally a code-quality migration. Existing
+CakePHP repositories are expected to have formatter changes and native Mago
+findings on their first run. Review the formatting as a dedicated change, then
+either address lint findings incrementally or establish a baseline:
+
+```sh
+mago format --dry-run
+mago lint --stats
+mago lint --baseline mago-baseline.toml --generate-baseline
+mago lint --baseline mago-baseline.toml
+mago lint --baseline mago-baseline.toml --remove-outdated-baseline-entries
+```
+
+Commit the baseline and remove outdated entries as findings are fixed. New
+findings remain visible, so the baseline is a migration tool rather than a
+weaker permanent ruleset.
+
+The preset starts from Mago's default rule catalogue, then disables language
+preferences that conflict with established CakePHP code. Projects can override
+native or CakePHP rules after the `extends` declaration:
 
 ```toml
 [linter.rules]
@@ -56,6 +74,7 @@ cyclomatic-complexity = { enabled = false }
 | --- | --- |
 | PSR-12 layout, braces, imports, quotes, commas, casts and return spacing | Mago formatter with CakePHP settings |
 | Short arrays, braced blocks, short tags, silenced errors, assignments in conditions and redundant syntax | Native Mago rules |
+| Conflicting `empty()`/`isset()`/comparison/named-argument preferences | Disabled by the CakePHP preset |
 | Trait `Trait` suffix | `mago-cakephp/trait-suffix` |
 | Method underscore prefixes, with Entity accessor/mutator exceptions | `mago-cakephp/public-method-underscore` |
 | `elseif` spelling | `mago-cakephp/elseif` |
@@ -76,6 +95,12 @@ when diagnostics or fixes differ. Mago may report additional quality or
 security findings because its defaults remain enabled, and formatter output is
 not expected to be byte-for-byte identical to PHPCBF.
 
+Rules are added here only when they encode CakePHP-specific policy that native
+Mago cannot express. A difference from CakePHP CodeSniffer alone is not a reason
+to recreate a sniff. Conversely, a clean CakePHP CodeSniffer run does not imply
+a clean Mago run: Mago's maintainability, correctness, and security diagnostics
+are part of the value of adopting this preset.
+
 Mago internally understands PHPDoc, but version 1.47's PHP extension SDK exposes
 docblocks as source trivia rather than a parsed PHPDoc tree. The extension
 therefore implements only the small line-oriented PHPDoc policies listed above.
@@ -89,8 +114,12 @@ therefore implements only the small line-oriented PHPDoc policies listed above.
 | Primary target | CakePHP 6.x applications and plugins |
 
 Run `composer run cs-check`, `composer test`, `composer run lint-corpus`,
-`composer run test-fixes`, and `composer run test-consumer`. To validate the
-extension rules against CakePHP itself, pass an existing shallow checkout with
+`composer run test-fixes`, `composer run test-formatter`, and
+`composer run test-consumer`. To check the CakePHP-specific extension rules for
+false positives against CakePHP itself, pass an existing shallow checkout with
 `scripts/check-cakephp-6.sh --workspace /path/to/cakephp`; without an argument
-the script creates a temporary shallow clone of CakePHP 6.x. A bare positional
-path remains supported as shorthand.
+the script creates a temporary shallow clone of CakePHP 6.x. Add
+`--migration-audit` to run the complete native Mago preset and see the
+refactoring backlog. That audit is expected to exit unsuccessfully until the
+target codebase has completed its migration. A bare positional path remains
+supported as shorthand.

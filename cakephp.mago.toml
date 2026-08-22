@@ -34,8 +34,9 @@ preserve-redundant-logical-binary-expression-parentheses = true
 separate-use-types = false
 break-promoted-properties-list = false
 
-# Keep Mago's default catalogue enabled. Only CakePHP policy choices are
-# configured here; consuming projects remain free to override any rule.
+# Start from Mago's useful default catalogue while disabling language
+# preferences that conflict with established CakePHP practices.
+# Consuming projects remain free to override any rule.
 [linter.rules]
 array-style = { enabled = true, level = "error", style = "short" }
 block-statement = { enabled = true, level = "error" }
@@ -46,3 +47,9 @@ no-redundant-parentheses = { enabled = true, level = "error" }
 no-redundant-final = { enabled = true, level = "error" }
 no-redundant-use = { enabled = true, level = "error" }
 no-closing-tag = { enabled = true, level = "error" }
+
+# CakePHP permits value equality, positional arguments, empty(), and isset().
+identity-comparison = { enabled = false }
+literal-named-argument = { enabled = false }
+no-empty = { enabled = false }
+no-isset = { enabled = false }

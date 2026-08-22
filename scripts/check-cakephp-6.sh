@@ -3,9 +3,10 @@ set -euo pipefail
 
 checkout_dir=""
 temporary_checkout=""
+migration_audit=false
 
 usage() {
-    echo "Usage: $0 [--workspace PATH | PATH]"
+    echo "Usage: $0 [--migration-audit] [--workspace PATH | PATH]"
 }
 
 while [[ $# -gt 0 ]]; do
@@ -21,6 +22,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --workspace=*)
             checkout_dir="${1#--workspace=}"
+            shift
+            ;;
+        --migration-audit)
+            migration_audit=true
             shift
             ;;
         -h|--help)
@@ -69,3 +74,9 @@ config="$repo_root/tests/cakephp6/mago.toml"
 "$repo_root/vendor/bin/mago" --workspace "$checkout_dir" --config "$config" extension validate
 "$repo_root/vendor/bin/mago" --workspace "$checkout_dir" --config "$config" lint --only \
     mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock,mago-cakephp/docblock-tag-spacing,mago-cakephp/throws-tag,mago-cakephp/inherit-doc
+
+if [[ "$migration_audit" == true ]]; then
+    echo "Running the full Mago-first preset; findings represent migration work."
+    "$repo_root/vendor/bin/mago" --workspace "$checkout_dir" --config "$repo_root/cakephp.mago.toml" \
+        lint --no-extensions --stats src config
+fi

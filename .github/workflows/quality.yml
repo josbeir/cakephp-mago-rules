@@ -54,6 +54,7 @@ jobs:
       - name: Test installed consumer configuration
         run: |
           composer run test-consumer
+          composer run test-formatter
           composer run test-fixes
 
   cakephp-6:

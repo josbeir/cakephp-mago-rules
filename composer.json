@@ -27,6 +27,7 @@
     "validate-extension": "mago --workspace tests/corpus extension validate",
     "lint-corpus": "mago --workspace tests/corpus lint --only mago-cakephp/trait-suffix,mago-cakephp/public-method-underscore,mago-cakephp/elseif,mago-cakephp/function-docblock,mago-cakephp/docblock-tag-spacing,mago-cakephp/throws-tag,mago-cakephp/inherit-doc",
     "test-consumer": "scripts/check-consumer.sh",
+    "test-formatter": "scripts/check-formatter.sh",
     "test-fixes": "scripts/check-fixes.sh"
   },
   "config": {
